@@ -1,0 +1,11 @@
+MONGO:
+  URI-MODE: false
+  HOST: 127.0.0.1
+  PORT: 27017
+  DATABASE: Meetup
+  AUTH:
+    USERNAME: root
+    PASSWORD: password
+    AUTH_DATABASE: admin
+  URI:
+    CONNECTION-STR: mongodb://username:password@127.0.0.1

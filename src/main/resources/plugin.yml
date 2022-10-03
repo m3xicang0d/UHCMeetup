@@ -1,0 +1,4 @@
+main: dev.kry.meetup.UHCMeetup
+name: UHCMeetup
+version: ${project.version}
+author: Kry Services
