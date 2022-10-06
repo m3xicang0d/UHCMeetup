@@ -7,4 +7,8 @@ package dev.mexican.meetup.game
  **/
 
 class GameHandler {
+
+    fun createGame() {
+
+    }
 }

@@ -1,6 +1,6 @@
 package dev.mexican.meetup.storage
 
-import dev.mexican.meetup.UHCMeetup
+import dev.mexican.meetup.Burrito
 import dev.mexican.meetup.config.SettingsFile
 import dev.mexican.meetup.storage.type.json.JsonStorage
 import dev.mexican.meetup.storage.type.mongo.MongoStorage
@@ -18,7 +18,7 @@ class StorageHandler {
     fun load() {
         val config = SettingsFile.getConfig()
         val storageType = config.getString("STORAGE-TYPE", "JSON")
-        UHCMeetup.getInstance().storage = when(storageType.uppercase()) {
+        Burrito.getInstance().storage = when(storageType.uppercase()) {
             "MONGO" -> MongoStorage()
             "JSON" -> JsonStorage()
             "REDIS" -> RedisStorage()

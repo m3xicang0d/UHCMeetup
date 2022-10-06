@@ -1,1 +1,27 @@
 STORAGE-TYPE: "MONGO" #MONGO,JSON,REDIS
+
+LOBBY:
+  WORLD: "Lobby"
+
+GENERATION:
+  TYPE: INTEGRATED #INTEGRATED, SEED
+  #Integrated
+  ONLY_PLAINS: true
+  LIQUID_LIMIT: 1000 #This include water and lave
+  #Only if option is false
+  REPLACEMENTS: #https://gist.github.com/NonUKry/f4d852b13b0734dc4b8557370a3a1594
+    - "=Desert"
+    - "=Plains"
+    - "=Forest"
+    - "Deep Ocean->Plains"
+    - "Ocean->Plains"
+    - "Jungle->Forest"
+    - "Ice Plains->Desert"
+    - "JungleEdge->Forest"
+    - "JungleHills->Forest"
+    - "Cold Taiga->Plains"
+    - "Ice Mountains->Plains"
+    - "FrozenRiver->Plains"
+    - "OTHERS->Plains"
+  #Seed
+  SEED-LIST: []

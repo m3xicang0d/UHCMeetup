@@ -3,7 +3,7 @@ package dev.mexican.meetup.storage.type.mongo
 import com.google.common.base.Preconditions
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.UpdateOptions
-import dev.mexican.meetup.UHCMeetup
+import dev.mexican.meetup.Burrito
 import org.bson.Document
 
 
@@ -16,7 +16,7 @@ import org.bson.Document
 object Mongo {
     @JvmStatic
     fun getCollection(input : String) : MongoCollection<Document> {
-        val storage = UHCMeetup.getInstance().storage
+        val storage = Burrito.getInstance().storage
         Preconditions.checkArgument(storage is MongoStorage, "Error, config system no is mongodb")
         return (storage as MongoStorage).connection!!.mongoDatabase.getCollection(input)
     }

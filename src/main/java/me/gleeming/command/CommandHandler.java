@@ -15,10 +15,10 @@ import java.util.Arrays;
 
 @SuppressWarnings("UnstableApiUsage")
 public class CommandHandler {
-    @Getter @Setter private static JavaPlugin javaPlugin;
+    @Getter @Setter private static JavaPlugin plugin;
     
     public static void init(JavaPlugin javaPlugin) {
-        javaPlugin = javaPlugin;
+        CommandHandler.plugin = javaPlugin;
     } 
     
     /**
@@ -27,7 +27,7 @@ public class CommandHandler {
      */
     @SneakyThrows
     public static void registerCommands(String path) {
-        ClassPath.from(javaPlugin.getClass().getClassLoader()).getAllClasses().stream()
+        ClassPath.from(plugin.getClass().getClassLoader()).getAllClasses().stream()
                 .filter(info -> info.getPackageName().startsWith(path))
                 .forEach(info -> registerCommands(info.load()));
     }
@@ -71,7 +71,7 @@ public class CommandHandler {
      */
     @SneakyThrows
     public static void registerProcessors(String path) {
-        ClassPath.from(javaPlugin.getClass().getClassLoader()).getAllClasses().stream()
+        ClassPath.from(plugin.getClass().getClassLoader()).getAllClasses().stream()
                 .filter(info -> info.getPackageName().startsWith(path))
                 .filter(info -> info.load().getSuperclass().equals(Processor.class))
                 .forEach(info -> {

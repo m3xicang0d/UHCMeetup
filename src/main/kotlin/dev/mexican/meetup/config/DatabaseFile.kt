@@ -1,7 +1,7 @@
 package dev.mexican.meetup.config
 
 import com.google.common.base.Preconditions
-import dev.mexican.meetup.UHCMeetup
+import dev.mexican.meetup.Burrito
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
 
@@ -15,12 +15,12 @@ import java.io.File
 class DatabaseFile : YamlConfiguration() {
 
     private val fileName = "database.yml"
-    private val file: File = File(UHCMeetup.getInstance().dataFolder, fileName)
+    private val file: File = File(Burrito.getInstance().dataFolder, fileName)
 
     init {
         Preconditions.checkArgument(!initialed, "Error, config file already initialed!")
         initialed = true
-        if (!file.exists()) UHCMeetup.getInstance().saveResource(fileName, false)
+        if (!file.exists()) Burrito.getInstance().saveResource(fileName, false)
         this.reload()
         config = this
     }
