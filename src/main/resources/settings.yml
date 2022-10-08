@@ -1,21 +1,37 @@
 STORAGE-TYPE: "MONGO" #MONGO,JSON,REDIS
 
+SETTINGS:
+  SCOREBOARD-ENABLED: true
+  NAMETAG-HEAL: true
+  SCENARIOS: false
+  SERVER-TYPE: SINGLE #Single,Multiple
+
 LOBBY:
   WORLD: "Lobby"
+
+GAME:
+  PLAYERS:
+    MIN: 3
+    MAX: 10
+  BORDER:
+    INITIAL: 150
+    REDUCTION: 10
+    MINIMAL: 50
+    TIME: 30 #In seconds
 
 GENERATION:
   TYPE: INTEGRATED #INTEGRATED, SEED
   #Integrated
   ONLY_PLAINS: true
-  LIQUID_LIMIT: 1000 #This include water and lave
+  LIQUID_LIMIT: 3000 #This include water and lave
   #Only if option is false
   REPLACEMENTS: #https://gist.github.com/NonUKry/f4d852b13b0734dc4b8557370a3a1594
     - "=Desert"
     - "=Plains"
-    - "=Forest"
+    - "Forest->Plains"
     - "Deep Ocean->Plains"
     - "Ocean->Plains"
-    - "Jungle->Forest"
+    - "Jungle->Desert"
     - "Ice Plains->Desert"
     - "JungleEdge->Forest"
     - "JungleHills->Forest"

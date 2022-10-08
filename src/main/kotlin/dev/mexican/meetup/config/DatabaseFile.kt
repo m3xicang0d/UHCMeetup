@@ -46,7 +46,7 @@ class DatabaseFile : YamlConfiguration() {
         }
 
         @JvmStatic
-        var initialed = false
+        private var initialed = false
             set(value) {
                 Preconditions.checkArgument(value, "Error, dont modify code :)")
                 field = value

@@ -1,4 +1,5 @@
-main: dev.kry.meetup.UHCMeetup
-name: UHCMeetup
-version: 1.0-SNAPSHOT
+main: dev.mexican.meetup.Burrito
+name: Burrito
+version: ${project.version}
 author: Kry Services
+load: STARTUP

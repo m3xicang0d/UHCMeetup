@@ -1,0 +1,53 @@
+TITLE: "&b&lUHC Meetup"
+
+TITLE-ANIMATED:
+  ENABLED: true
+  TIME: 5 #in seconds my son.
+  ANIMATION:
+    - ""
+    - ""
+    - ""
+
+FOOTER-ANIMATED:
+  ENABLED: true
+  TIME: 5 #in seconds my son.
+  ANIMATION:
+    - ""
+    - ""
+    - ""
+
+IN-LOBBY:
+  - "&7&m--------------------"
+  - "&fWaiting for players"
+  - "&b<players-requiered> &fmore players."
+  - ""
+  - "<footer>"
+  - "67&m--------------------"
+
+IN-COUNTDOWN:
+  - "67&m--------------------"
+  - "&6The game will start in:"
+  - "<seconds>"
+  - ""
+  - "<footer>"
+  - "67&m--------------------"
+
+IN-MATCH:
+  - "67&m--------------------"
+  - "&eBorder: <border> (<border-remaining>)"
+  - "Remaining Players: <remaining>"
+  - "Ping: <ping>"
+  - "Kills: <kills>"
+  - ""
+  - "<footer>"
+  - "67&m--------------------"
+
+IN-SPECTATOR:
+  - "67&m--------------------"
+  - "&eBorder: <border> (<border-remaining>)"
+  - "Remaining Players: <remaining>"
+  - "Ping: <ping>"
+  - "Kills: <kills>"
+  - ""
+  - "<footer>"
+  - "67&m--------------------"

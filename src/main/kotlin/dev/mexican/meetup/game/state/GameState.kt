@@ -9,6 +9,8 @@ package dev.mexican.meetup.game.state
 enum class GameState {
     GENERATING,
     WAITING,
+    SCATTING,
+    COUNTDOWN,
     PLAYING,
     ENDING,
 }

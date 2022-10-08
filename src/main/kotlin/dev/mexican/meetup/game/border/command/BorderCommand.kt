@@ -20,7 +20,7 @@ class BorderCommand {
 
     @Command(names = ["border set"], permission = "command.border")
     fun execute(sender : CommandSender, @Param(name = "size") size : Int) {
-        val actualBorder = Burrito.getInstance().borderHandler.border
+        val actualBorder = Burrito.getInstance().gameHandler.actualGame!!.border.actualBorder
         if(actualBorder == size) {
             sender.sendMessage("Borde en ese tamaño")
             return
@@ -29,7 +29,7 @@ class BorderCommand {
             sender.sendMessage("El borde no puede ser mayor")
             return
         }
-        Burrito.getInstance().borderHandler.border = size
+        Burrito.getInstance().gameHandler.actualGame!!.border.resize()
     }
 
 }

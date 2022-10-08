@@ -1,0 +1,3 @@
+JOIN-MESSAGE:
+  IN-LOBBY: "Need more players"
+  IN-GAMME: "Spectator joined"

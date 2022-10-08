@@ -2,12 +2,13 @@ package dev.mexican.meetup.game.world.generation.type.map.task
 
 import dev.mexican.meetup.Burrito
 import dev.mexican.meetup.config.SettingsFile
+import dev.mexican.meetup.game.Game
+import dev.mexican.meetup.game.state.GameState
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.scheduler.BukkitRunnable
-import java.io.File
 import kotlin.random.Random
 
 /**
@@ -16,7 +17,7 @@ import kotlin.random.Random
  * Project UHCMeetup
  **/
 
-class MapGeneratorTask : BukkitRunnable() {
+class MapGeneratorTask(private val game : Game) : BukkitRunnable() {
 
     private var busy = false
     private var seed = Random.nextLong()
@@ -31,25 +32,17 @@ class MapGeneratorTask : BukkitRunnable() {
     override fun run() {
         if(busy) return
         busy = true
-        var world : World? = Bukkit.getWorld("world")
-        val folder = File(Bukkit.getWorldContainer(), "world")
+        var world : World? = Burrito.getInstance().worldHandler.world
+        val folder = Burrito.getInstance().worldHandler.worldFolder
         if(world != null) {
             world.players.forEach {
                 plugin.lobbyHandler.sendToLobby(it)
             }
-            Bukkit.unloadWorld(world, false)
-            val start = System.currentTimeMillis()
-            do {
-                deleteDirectory(folder)
-            } while (folder.exists())
-            println("Deleted after ${System.currentTimeMillis()-start}millis")
+            Burrito.getInstance().worldHandler.removeWorld(world)
         }
         if(folder.exists()) {//If world not is loaded but folder exist!
-            val start = System.currentTimeMillis()
-            do {
-                deleteDirectory(folder)
-            } while (folder.exists())
-            println("Deleted after ${System.currentTimeMillis()-start}millis")
+            Burrito.getInstance().worldHandler.removeFolder(folder)
+
         }
         val creator = WorldCreator("world")
             .generateStructures(false)
@@ -59,15 +52,15 @@ class MapGeneratorTask : BukkitRunnable() {
         } catch (e : Exception) {
             Bukkit.getConsoleSender().sendMessage("Error, trying create map!")
             Bukkit.getServer().unloadWorld(world, false)
-            deleteDirectory(folder)
+            Burrito.getInstance().worldHandler.removeFolder(folder)
             return
         }
         var invalid = false
         var water = 0
 
         var breaked = false
-        for (x in -plugin.borderHandler.border .. plugin.borderHandler.border) {
-            for (z in -plugin.borderHandler.border .. plugin.borderHandler.border) {
+        for (x in -game.border.initialBorder .. game.border.initialBorder) {
+            for (z in -game.border.initialBorder .. game.border.initialBorder) {
                 val isCenter = x >= -100 && x <= 100 && z >= -100 && z <= 100
                 if(isCenter) {
                     val type = world.getHighestBlockAt(x, z).location.add(0.0, -1.0, 0.0).block.type
@@ -75,7 +68,7 @@ class MapGeneratorTask : BukkitRunnable() {
                         water++
                     }
                 }
-                if (water >= SettingsFile.getConfig().getInt("GENERATION.WATER_LIMIT")) {
+                if (water >= SettingsFile.getConfig().getInt("GENERATION.LIQUID_LIMIT")) {
                     Bukkit.getConsoleSender().sendMessage("Invalid center, too much water/lava.")
                     invalid = true
                     breaked = true
@@ -90,33 +83,19 @@ class MapGeneratorTask : BukkitRunnable() {
         if(invalid) {
             Bukkit.getServer().unloadWorld(world, false)
             Bukkit.getConsoleSender().sendMessage("World too ugly, generating other")
-            val start = System.currentTimeMillis()
-            do {
-                deleteDirectory(folder)
-            } while (folder.exists())
-            println("Deleted after ${System.currentTimeMillis()-start}millis")
+            Burrito.getInstance().worldHandler.removeWorld(world)
             seed = Random.nextLong()
             busy = false
+            return
         } else {
             Bukkit.getConsoleSender().sendMessage("Successfully generated UHC world!")
             Bukkit.getConsoleSender().sendMessage("Water=$water")
             cancel()
         }
+        Burrito.getInstance().worldHandler.world = world
+        game.border.world = world
+        game.state = GameState.WAITING
     }
 
-    private fun deleteDirectory(path: File): Boolean {
-        if (path.exists()) {
-            val files = path.listFiles()
-            if (files != null) {
-                for (i in files.indices) {
-                    if (files[i].isDirectory) {
-                        deleteDirectory(files[i])
-                    } else {
-                        files[i].delete()
-                    }
-                }
-            }
-        }
-        return path.delete()
-    }
+
 }

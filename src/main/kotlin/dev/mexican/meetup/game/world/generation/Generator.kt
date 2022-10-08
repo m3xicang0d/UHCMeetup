@@ -1,6 +1,8 @@
 package dev.mexican.meetup.game.world.generation
 
 import dev.mexican.meetup.config.SettingsFile
+import dev.mexican.meetup.game.Game
+import org.bukkit.World
 
 /**
  * @author UKry
@@ -14,5 +16,5 @@ abstract class Generator {
 
     open fun preConfiguration() {}
 
-    abstract fun generateWorld()
+    abstract fun generateWorld(game : Game)
 }

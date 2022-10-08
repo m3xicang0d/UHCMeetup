@@ -1,6 +1,7 @@
 package dev.mexican.meetup.game.world.generation.type.map
 
 import dev.mexican.meetup.Burrito
+import dev.mexican.meetup.game.Game
 import dev.mexican.meetup.game.world.generation.Generator
 import dev.mexican.meetup.game.world.generation.type.map.task.MapGeneratorTask
 import net.minecraft.server.v1_8_R3.BiomeBase
@@ -80,8 +81,8 @@ class MapGenerator : Generator() {
         }
     }
 
-    override fun generateWorld() {
-        MapGeneratorTask().runTaskTimer(Burrito.getInstance(), 0L, 20L)
+    override fun generateWorld(game : Game) {
+        MapGeneratorTask(game).runTaskTimer(Burrito.getInstance(), 0L, 20L)
     }
 
 }

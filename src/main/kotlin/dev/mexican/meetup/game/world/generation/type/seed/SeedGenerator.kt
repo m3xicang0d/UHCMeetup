@@ -1,5 +1,6 @@
 package dev.mexican.meetup.game.world.generation.type.seed
 
+import dev.mexican.meetup.game.Game
 import dev.mexican.meetup.game.world.generation.Generator
 
 /**
@@ -9,7 +10,8 @@ import dev.mexican.meetup.game.world.generation.Generator
  **/
 
 class SeedGenerator : Generator() {
-    override fun generateWorld() {
 
+    override fun generateWorld(game: Game) {
+        TODO("Not yet implemented")
     }
 }

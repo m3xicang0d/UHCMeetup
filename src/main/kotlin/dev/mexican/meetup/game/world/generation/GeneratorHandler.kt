@@ -1,7 +1,7 @@
 package dev.mexican.meetup.game.world.generation
 
 import dev.mexican.meetup.config.SettingsFile
-import dev.mexican.meetup.game.world.command.GenerateCommand
+import dev.mexican.meetup.game.world.command.RegenerateCommand
 import dev.mexican.meetup.game.world.generation.type.map.MapGenerator
 import dev.mexican.meetup.game.world.generation.type.seed.SeedGenerator
 import dev.ukry.api.handler.Handler
@@ -38,7 +38,6 @@ class GeneratorHandler : Handler() {
 
     override fun init() {
         generator.preConfiguration()
-        generator.generateWorld()
-        CommandHandler.registerCommands(GenerateCommand::class.java)
+        CommandHandler.registerCommands(RegenerateCommand::class.java)
     }
 }
