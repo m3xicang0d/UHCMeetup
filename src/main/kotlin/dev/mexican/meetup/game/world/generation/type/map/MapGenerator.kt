@@ -81,8 +81,8 @@ class MapGenerator : Generator() {
         }
     }
 
-    override fun generateWorld(game : Game) {
-        MapGeneratorTask(game).runTaskTimer(Burrito.getInstance(), 0L, 20L)
+    override fun generateWorld(game : Game, forced : Boolean) {
+        MapGeneratorTask(game, forced).runTaskTimer(Burrito.getInstance(), 0L, 20L)
     }
 
 }

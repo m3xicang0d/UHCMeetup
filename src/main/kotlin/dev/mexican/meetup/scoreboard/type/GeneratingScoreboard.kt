@@ -11,6 +11,7 @@ import org.bukkit.entity.Player
 
 class GeneratingScoreboard : Scoreboard() {
     override fun accept(player : Player, scores : MutableList<String>) {
-        scores.add("Generating...")
+        scores.add("This is possible?")
+        scores.add("Please report this")
     }
 }

@@ -16,5 +16,5 @@ abstract class Generator {
 
     open fun preConfiguration() {}
 
-    abstract fun generateWorld(game : Game)
+    abstract fun generateWorld(game : Game, forced : Boolean)
 }

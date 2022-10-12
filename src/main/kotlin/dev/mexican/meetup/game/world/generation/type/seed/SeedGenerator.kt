@@ -11,7 +11,7 @@ import dev.mexican.meetup.game.world.generation.Generator
 
 class SeedGenerator : Generator() {
 
-    override fun generateWorld(game: Game) {
+    override fun generateWorld(game: Game, forced : Boolean) {
         TODO("Not yet implemented")
     }
 }

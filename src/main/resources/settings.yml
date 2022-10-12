@@ -22,7 +22,6 @@ GAME:
 GENERATION:
   TYPE: INTEGRATED #INTEGRATED, SEED
   #Integrated
-  ONLY_PLAINS: true
   LIQUID_LIMIT: 3000 #This include water and lave
   #Only if option is false
   REPLACEMENTS: #https://gist.github.com/NonUKry/f4d852b13b0734dc4b8557370a3a1594

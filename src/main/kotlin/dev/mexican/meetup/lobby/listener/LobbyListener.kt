@@ -1,10 +1,13 @@
 package dev.mexican.meetup.lobby.listener
 
 import dev.mexican.meetup.Burrito
+import dev.mexican.meetup.game.state.GameState
 import org.bukkit.Bukkit
 import org.bukkit.Difficulty
+import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.world.WorldLoadEvent
 
 /**
@@ -22,9 +25,21 @@ class LobbyListener : Listener {
         world.worldBorder.setCenter(0.0, 0.0)
         world.difficulty = Difficulty.PEACEFUL
         world.pvp = false
+        val block = world.getBlockAt(0, 100, 0)
+        if(block.type == Material.AIR) {
+            block.type = Material.GLASS
+            world.setSpawnLocation(0, 100, 0)
+        }
         Bukkit.getConsoleSender().sendMessage("-".repeat(20))
         Bukkit.getConsoleSender().sendMessage("Lobby world configured!")
         Bukkit.getConsoleSender().sendMessage("-".repeat(20))
+    }
+
+    @EventHandler
+    fun onPlayerJoin(event : PlayerJoinEvent) {
+        val game = Burrito.getInstance().gameHandler.actualGame ?: return
+        if(game.state != GameState.WAITING) return
+        Burrito.getInstance().lobbyHandler.sendToLobby(event.player)
     }
 
 }

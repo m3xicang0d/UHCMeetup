@@ -2,7 +2,6 @@ package dev.mexican.meetup.game.world
 
 import dev.mexican.meetup.Burrito
 import dev.mexican.meetup.game.world.generation.GeneratorHandler
-import dev.mexican.meetup.game.world.generation.type.map.task.MapGeneratorTask
 import dev.ukry.api.handler.Handler
 import org.bukkit.Bukkit
 import org.bukkit.World

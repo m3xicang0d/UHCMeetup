@@ -11,6 +11,7 @@ import dev.mexican.meetup.scoreboard.ScoreboardProvider
 import dev.mexican.meetup.scoreboard.type.*
 import dev.mexican.meetup.storage.Storage
 import dev.mexican.meetup.storage.StorageHandler
+import fr.mrmicky.fastinv.FastInvManager
 import io.github.thatkawaiisam.assemble.Assemble
 import me.gleeming.command.CommandHandler
 import org.bukkit.generator.ChunkGenerator
@@ -70,6 +71,7 @@ class Burrito : JavaPlugin() {
             PlayingScoreboard(),
             EndingScoreboard()
         ))
+        FastInvManager.register(this)
     }
 
     override fun getDefaultWorldGenerator(worldName: String, id: String?): ChunkGenerator? {

@@ -31,7 +31,6 @@ class Game(
                 }
                 GameState.WAITING -> {
                     CC.announceAndLog("Map generated successfully")
-                    a()
                 }
                 GameState.SCATTING -> {
                     border.generateBedrock()
@@ -50,7 +49,7 @@ class Game(
         }
 
     fun generateMap() {
-        Burrito.getInstance().worldHandler.generatorHandler.generator.generateWorld(this)
+        Burrito.getInstance().worldHandler.generatorHandler.generator.generateWorld(this, false)
     }
 
     fun a() {

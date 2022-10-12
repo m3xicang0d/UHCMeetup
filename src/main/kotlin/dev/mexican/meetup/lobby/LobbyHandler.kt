@@ -8,7 +8,7 @@ import org.bukkit.Bukkit
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
-import util.Properties
+import dev.mexican.meetup.util.Properties
 import java.io.File
 import kotlin.system.exitProcess
 
@@ -29,8 +29,9 @@ class LobbyHandler : Handler() {
     }
 
     private fun verifyProperties() {
-        Properties.setServerProperty(Properties.ServerProperty.GENERATE_STRUCTURES, false)
-        Properties.setServerProperty(Properties.ServerProperty.LEVEL_NAME, Burrito.getInstance().lobbyHandler.lobbyName)
+        Properties.setServerProperty("generate-structures", false)
+        Properties.setServerProperty("level-name", Burrito.getInstance().lobbyHandler.lobbyName)
+        Properties.setServerProperty("level-type", "DEFAULT")
         Properties.savePropertiesFile()
     }
 

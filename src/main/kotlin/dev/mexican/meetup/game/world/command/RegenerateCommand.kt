@@ -28,6 +28,6 @@ class RegenerateCommand {
             Bukkit.getConsoleSender().sendMessage("That game no have map actually!")
             return
         }
-        Burrito.getInstance().worldHandler.generatorHandler.generator.generateWorld(game)
+        Burrito.getInstance().worldHandler.generatorHandler.generator.generateWorld(game, true)
     }
 }

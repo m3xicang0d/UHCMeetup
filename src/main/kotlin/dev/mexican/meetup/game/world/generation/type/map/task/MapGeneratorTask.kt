@@ -9,6 +9,7 @@ import org.bukkit.Material
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.scheduler.BukkitRunnable
+import java.io.File
 import kotlin.random.Random
 
 /**
@@ -17,7 +18,7 @@ import kotlin.random.Random
  * Project UHCMeetup
  **/
 
-class MapGeneratorTask(private val game : Game) : BukkitRunnable() {
+class MapGeneratorTask(private val game : Game, val forced : Boolean) : BukkitRunnable() {
 
     private var busy = false
     private var seed = Random.nextLong()
@@ -34,6 +35,13 @@ class MapGeneratorTask(private val game : Game) : BukkitRunnable() {
         busy = true
         var world : World? = Burrito.getInstance().worldHandler.world
         val folder = Burrito.getInstance().worldHandler.worldFolder
+        val lock = File(folder, "empty.lock")
+        if(lock.exists() && !forced) {
+            println("Cancelled world creation because is unused!")
+            cancel()
+            game.state = GameState.WAITING
+            return
+        }
         if(world != null) {
             world.players.forEach {
                 plugin.lobbyHandler.sendToLobby(it)
@@ -42,7 +50,6 @@ class MapGeneratorTask(private val game : Game) : BukkitRunnable() {
         }
         if(folder.exists()) {//If world not is loaded but folder exist!
             Burrito.getInstance().worldHandler.removeFolder(folder)
-
         }
         val creator = WorldCreator("world")
             .generateStructures(false)
@@ -92,6 +99,7 @@ class MapGeneratorTask(private val game : Game) : BukkitRunnable() {
             Bukkit.getConsoleSender().sendMessage("Water=$water")
             cancel()
         }
+        lock.createNewFile()
         Burrito.getInstance().worldHandler.world = world
         game.border.world = world
         game.state = GameState.WAITING

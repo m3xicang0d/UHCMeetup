@@ -1,20 +1,23 @@
-TITLE: "&b&lUHC Meetup"
+TITLE-NORMAL: "&b&lUHC Meetup"
 
 TITLE-ANIMATED:
   ENABLED: true
   TIME: 5 #in seconds my son.
   ANIMATION:
-    - ""
-    - ""
-    - ""
+    - "&4Burrito"
+    - "&cBurrito"
+    - "&4&lBurrito"
+    - "&c&lBurrito"
 
+FOOTER-NORMAL: "www.server.com"
 FOOTER-ANIMATED:
   ENABLED: true
   TIME: 5 #in seconds my son.
   ANIMATION:
-    - ""
-    - ""
-    - ""
+    - "&4www.server.com"
+    - "&cwww.server.com"
+    - "&4&lwww.server.com"
+    - "&c&lwww.server.com"
 
 IN-LOBBY:
   - "&7&m--------------------"
@@ -22,32 +25,32 @@ IN-LOBBY:
   - "&b<players-requiered> &fmore players."
   - ""
   - "<footer>"
-  - "67&m--------------------"
+  - "&7&m--------------------"
 
 IN-COUNTDOWN:
-  - "67&m--------------------"
+  - "&7&m--------------------"
   - "&6The game will start in:"
   - "<seconds>"
   - ""
   - "<footer>"
-  - "67&m--------------------"
+  - "&7&m--------------------"
 
 IN-MATCH:
-  - "67&m--------------------"
+  - "&7&m--------------------"
   - "&eBorder: <border> (<border-remaining>)"
   - "Remaining Players: <remaining>"
   - "Ping: <ping>"
   - "Kills: <kills>"
   - ""
   - "<footer>"
-  - "67&m--------------------"
+  - "&7&m--------------------"
 
 IN-SPECTATOR:
-  - "67&m--------------------"
+  - "&7&m--------------------"
   - "&eBorder: <border> (<border-remaining>)"
   - "Remaining Players: <remaining>"
   - "Ping: <ping>"
   - "Kills: <kills>"
   - ""
   - "<footer>"
-  - "67&m--------------------"
+  - "&7&m--------------------"
