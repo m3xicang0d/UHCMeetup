@@ -1,5 +1,6 @@
 package dev.mexican.meetup.game.size.task
 
+import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.World
 import org.bukkit.scheduler.BukkitRunnable
@@ -15,7 +16,13 @@ class BorderGeneratorTask(val world : World, val size: Int) : BukkitRunnable() {
     var i = 0
 
     override fun run() {
-        if(i >= 5) cancel()
+        if(i >= 5) {
+            val border = world.worldBorder
+            border.size = size.toDouble() * 2
+            border.center = Location(world, 0.0, 100.0, 0.0)
+            cancel()
+            return
+        }
         i++
         //z
         for (z in -size+ 1 .. size-1) {

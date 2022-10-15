@@ -36,12 +36,12 @@ class MapGeneratorTask(private val game : Game, val forced : Boolean) : BukkitRu
         var world : World? = Burrito.getInstance().worldHandler.world
         val folder = Burrito.getInstance().worldHandler.worldFolder
         val lock = File(folder, "empty.lock")
-        if(lock.exists() && !forced) {
+        /*if(lock.exists() && !forced) {
             println("Cancelled world creation because is unused!")
             cancel()
             game.state = GameState.WAITING
             return
-        }
+        }*/
         if(world != null) {
             world.players.forEach {
                 plugin.lobbyHandler.sendToLobby(it)

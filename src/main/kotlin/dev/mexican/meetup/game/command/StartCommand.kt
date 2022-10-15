@@ -3,6 +3,7 @@ package dev.mexican.meetup.game.command
 import dev.mexican.meetup.Burrito
 import dev.mexican.meetup.game.state.GameState
 import me.gleeming.command.Command
+import me.gleeming.command.paramter.Param
 import org.bukkit.entity.Player
 
 /**
@@ -15,6 +16,11 @@ class StartCommand {
 
     @Command(names = ["start"], permission = "command.start")
     fun execute(player : Player) {
-        Burrito.getInstance().gameHandler.actualGame?.start()
+        Burrito.getInstance().gameHandler.actualGame!!.start()
+    }
+
+    @Command(names = ["game setstate"], permission = "command.start")
+    fun execute(player : Player, @Param(name = "state") state : GameState) {
+        Burrito.getInstance().gameHandler.actualGame!!.state = state
     }
 }

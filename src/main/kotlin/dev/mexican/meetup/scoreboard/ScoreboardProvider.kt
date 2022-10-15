@@ -73,14 +73,13 @@ class ScoreboardProvider(
         val state = Burrito.getInstance().gameHandler.actualGame!!.state
         var toReturn = mutableListOf<String>()
         when(state) {
-            GameState.SCATTING -> {
-                countDownScoreboard.accept(player, toReturn)
-            }
             GameState.WAITING -> {
                 lobbyScoreboard.accept(player, toReturn)
             }
             GameState.PLAYING -> {
                 playingScoreboard.accept(player, toReturn)
+            } GameState.COUNTDOWN -> {
+                countDownScoreboard.accept(player, toReturn)
             } else -> {
                 toReturn.add(state.toString())
             }

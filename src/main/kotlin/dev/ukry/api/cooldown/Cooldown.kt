@@ -13,19 +13,21 @@ import java.util.concurrent.TimeUnit
 
 class Cooldown {
 
-    var init = System.currentTimeMillis()
     var to = System.currentTimeMillis()
 
+    fun getRemainingLong() : Long {
+        return to - System.currentTimeMillis()
+    }
+
     fun getRemaining() : String {
-        return TimeUtils.formatIntoMMSS(to.toInt() - init.toInt())
+        return (TimeUnit.MILLISECONDS.toSeconds(to - System.currentTimeMillis()) + 1L).toString()
     }
 
     fun setCooldown(duration : Int) {
-        init = System.currentTimeMillis()
         to = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(duration.toLong())
     }
 
     fun isOnCooldown(player : Player): Boolean {
-        return to >= init
+        return to >= System.currentTimeMillis()
     }
 }

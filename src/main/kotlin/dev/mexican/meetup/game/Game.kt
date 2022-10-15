@@ -5,10 +5,21 @@ import dev.mexican.meetup.game.border.Border
 import dev.mexican.meetup.game.state.GameState
 import dev.mexican.meetup.util.CC
 import dev.ukry.api.cooldown.Cooldown
+import net.minecraft.server.v1_8_R3.Entity
+import net.minecraft.server.v1_8_R3.NBTTagCompound
+import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy
 import org.bukkit.Bukkit
 import org.bukkit.Location
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPig
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
+import org.bukkit.entity.EntityType
+import org.bukkit.entity.Pig
+import org.bukkit.entity.Player
+import org.bukkit.metadata.FixedMetadataValue
 import java.util.*
 import kotlin.random.Random
+
 
 /**
  * @author UKry
@@ -39,14 +50,20 @@ class Game(
                 }
                 GameState.COUNTDOWN -> {
                     cooldown = Cooldown().also { it.setCooldown(30) }
+                    Bukkit.getScheduler().runTaskLater(Burrito.getInstance(), {sitPlayers()}, 5L)
                 }
                 GameState.PLAYING -> {
+                    unSitePlayers()
                 }
                 GameState.ENDING -> {
 
                 }
             }
         }
+
+    val participants = mutableListOf<UUID>()
+    val spectators = mutableListOf<UUID>()
+    val pigs = mutableMapOf<UUID, Int>() //Pigs because dont move
 
     fun generateMap() {
         Burrito.getInstance().worldHandler.generatorHandler.generator.generateWorld(this, false)
@@ -127,10 +144,73 @@ class Game(
     }
 
     fun start() {
+        state = GameState.SCATTING
 
     }
 
     fun end() {
 
     }
+
+    fun sitPlayers() {
+        participants.stream()
+            .map(Bukkit::getPlayer)
+            .filter(Objects::nonNull)
+            .forEach {
+                println("Generating pig to ${it.name}")
+                val pig = it.location.add(0.5, 1.0, 0.5).world.spawnEntity(it.location, EntityType.PIG) as Pig
+                pig.maxHealth = 20.0
+                pig.health = 20.0
+                pig.setAdult()
+                pig.passenger = it
+
+                //invulnerability
+
+                val field = Entity::class.java.getDeclaredField("invulnerable")
+                field.isAccessible = true
+                field.set((pig as CraftPig).handle, true)
+
+                //nms
+                val nms = (pig as CraftEntity).handle
+                var tag = nms.nbtTag
+                if (tag == null) {
+                    tag = NBTTagCompound()
+                }
+                nms.c(tag)
+                tag.setInt("NoAI", 1)
+                tag.setInt("Silent", 1)
+                nms.f(tag)
+
+                Bukkit.getScheduler().runTaskLater(Burrito.getInstance(), { (pig as CraftEntity).handle.isInvisible = true }, 2L)
+
+                pigs[it.uniqueId] = (pig as CraftEntity).entityId
+                println("Pig spawned for ${it.name} ${(pig as CraftEntity).entityId}")
+            }
+    }
+
+    fun addParticipant(player : Player) {
+        participants.add(player.uniqueId)
+        Bukkit.broadcastMessage("Player ${player.name} joined!")
+    }
+
+    fun addSpectator(player : Player) {
+        spectators.add(player.uniqueId)
+        Bukkit.broadcastMessage("Spectator ${player.name} joined!")
+    }
+
+    fun unSitePlayers() {
+        participants.stream()
+            .map(Bukkit::getPlayer)
+            .filter(Objects::nonNull)
+            .forEach {
+                println("Removing ${it.name}")
+                val id = pigs[it.uniqueId]
+                println(id == null)
+                it.vehicle.remove()
+                val packet = PacketPlayOutEntityDestroy(id!!)
+                (it as CraftPlayer).handle.playerConnection.sendPacket(packet)
+                pigs.remove(it.uniqueId)
+            }
+    }
+
 }

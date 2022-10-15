@@ -5,8 +5,10 @@ import dev.mexican.meetup.game.state.GameState
 import org.bukkit.Bukkit
 import org.bukkit.Difficulty
 import org.bukkit.Material
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.world.WorldLoadEvent
 
@@ -41,5 +43,14 @@ class LobbyListener : Listener {
         if(game.state != GameState.WAITING) return
         Burrito.getInstance().lobbyHandler.sendToLobby(event.player)
     }
+
+    @EventHandler
+    fun antiVoid(event : EntityDamageEvent) {
+        if(event !is Player) return
+        if(event.cause != EntityDamageEvent.DamageCause.VOID) return
+        event.isCancelled = true
+        Burrito.getInstance().lobbyHandler.sendToLobby(event.player)
+    }
+
 
 }
