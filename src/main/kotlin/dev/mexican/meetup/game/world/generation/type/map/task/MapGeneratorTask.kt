@@ -4,6 +4,7 @@ import dev.mexican.meetup.Burrito
 import dev.mexican.meetup.config.SettingsFile
 import dev.mexican.meetup.game.Game
 import dev.mexican.meetup.game.state.GameState
+import dev.mexican.meetup.util.CC
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.World
@@ -23,12 +24,7 @@ class MapGeneratorTask(private val game : Game, val forced : Boolean) : BukkitRu
     private var busy = false
     private var seed = Random.nextLong()
     private val plugin = Burrito.getInstance()
-    private val invalids = mutableListOf(
-        Material.WATER,
-        Material.STATIONARY_WATER,
-        Material.LAVA,
-        Material.STATIONARY_LAVA
-    )
+    val init = System.currentTimeMillis()
 
     override fun run() {
         if(busy) return
@@ -64,6 +60,7 @@ class MapGeneratorTask(private val game : Game, val forced : Boolean) : BukkitRu
         }
         var invalid = false
         var water = 0
+        var lava = 0
 
         var breaked = false
         for (x in -game.border.initialBorder .. game.border.initialBorder) {
@@ -71,12 +68,22 @@ class MapGeneratorTask(private val game : Game, val forced : Boolean) : BukkitRu
                 val isCenter = x >= -100 && x <= 100 && z >= -100 && z <= 100
                 if(isCenter) {
                     val type = world.getHighestBlockAt(x, z).location.add(0.0, -1.0, 0.0).block.type
-                    if(invalids.contains(type)) {
+                    //Count water
+                    if(type == Material.WATER || type == Material.STATIONARY_WATER) {
                         water++
                     }
+                    if(type == Material.LAVA || type == Material.STATIONARY_LAVA) {
+                        lava++
+                    }
                 }
-                if (water >= SettingsFile.getConfig().getInt("GENERATION.LIQUID_LIMIT")) {
-                    Bukkit.getConsoleSender().sendMessage("Invalid center, too much water/lava.")
+                if (water >= SettingsFile.getConfig().getInt("GENERATION.LIQUID_LIMIT.WATER")) {
+                    Bukkit.getConsoleSender().sendMessage("Invalid center, too much water.")
+                    invalid = true
+                    breaked = true
+                    break
+                }
+                if (lava >= SettingsFile.getConfig().getInt("GENERATION.LIQUID_LIMIT.LAVA")) {
+                    Bukkit.getConsoleSender().sendMessage("Invalid center, too much lava.")
                     invalid = true
                     breaked = true
                     break
@@ -86,7 +93,6 @@ class MapGeneratorTask(private val game : Game, val forced : Boolean) : BukkitRu
                 break
             }
         }
-        Bukkit.getConsoleSender().sendMessage("Biome=${world.getHighestBlockAt(0, 0).biome.name}")
         if(invalid) {
             Bukkit.getServer().unloadWorld(world, false)
             Bukkit.getConsoleSender().sendMessage("World too ugly, generating other")
@@ -95,8 +101,12 @@ class MapGeneratorTask(private val game : Game, val forced : Boolean) : BukkitRu
             busy = false
             return
         } else {
-            Bukkit.getConsoleSender().sendMessage("Successfully generated UHC world!")
-            Bukkit.getConsoleSender().sendMessage("Water=$water")
+            CC.log("&7${"-".repeat(20)}")
+            CC.log("&aWorld successful generated after ${System.currentTimeMillis() - init} millis")
+            CC.log("&6Biome: &7${world.getHighestBlockAt(0, 0).biome.name}")
+            CC.log("&1Water: &7$water/${SettingsFile.getConfig().getInt("GENERATION.LIQUID_LIMIT.WATER")}")
+            CC.log("&4Lava: &7$lava/${SettingsFile.getConfig().getInt("GENERATION.LIQUID_LIMIT.LAVA")}")
+            CC.log("&7${"-".repeat(20)}")
             cancel()
         }
         lock.createNewFile()

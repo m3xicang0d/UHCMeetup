@@ -1,5 +1,5 @@
 main: dev.mexican.meetup.Burrito
 name: Burrito
-version: ${project.version}
+version: 1.0-SNAPSHOT
 author: Kry Services
 load: STARTUP

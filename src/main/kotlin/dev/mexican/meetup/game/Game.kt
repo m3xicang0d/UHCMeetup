@@ -198,6 +198,10 @@ class Game(
         Bukkit.broadcastMessage("Spectator ${player.name} joined!")
     }
 
+    fun isParticipant(player : Player) : Boolean {
+        return !participants.contains(player.uniqueId)
+    }
+
     fun unSitePlayers() {
         participants.stream()
             .map(Bukkit::getPlayer)

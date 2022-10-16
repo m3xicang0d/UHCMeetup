@@ -7,9 +7,7 @@ import dev.mexican.meetup.game.border.command.BorderCommand
 import dev.mexican.meetup.game.command.ScatteCommand
 import dev.mexican.meetup.game.command.StartCommand
 import dev.mexican.meetup.game.command.processors.GameStateProcessor
-import dev.mexican.meetup.game.listener.GameListener
-import dev.mexican.meetup.game.listener.PigListener
-import dev.mexican.meetup.game.listener.SpectatorListener
+import dev.mexican.meetup.game.listener.*
 import dev.ukry.api.handler.Handler
 import me.gleeming.command.CommandHandler
 import me.gleeming.command.paramter.ParamProcessor
@@ -51,6 +49,8 @@ class GameHandler : Handler() {
         Bukkit.getServer().pluginManager.registerEvents(PigListener(), Burrito.getInstance())
         Bukkit.getServer().pluginManager.registerEvents(SpectatorListener(), Burrito.getInstance())
         Bukkit.getServer().pluginManager.registerEvents(GameListener(), Burrito.getInstance())
+        Bukkit.getServer().pluginManager.registerEvents(LootListener(), Burrito.getInstance())
+        Bukkit.getServer().pluginManager.registerEvents(TablistListener(), Burrito.getInstance())
         createGame()
     }
 }

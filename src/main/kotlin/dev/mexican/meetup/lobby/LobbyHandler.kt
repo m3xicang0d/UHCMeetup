@@ -57,6 +57,6 @@ class LobbyHandler : Handler() {
 
     fun sendToLobby(player : Player) {
         val world = Bukkit.getWorld(lobbyName)!!
-        player.teleport(world.spawnLocation)
+        player.teleport(world.spawnLocation.clone().add(0.5, 1.0, 0.5))
     }
 }
