@@ -4,6 +4,7 @@ import dev.mexican.meetup.config.SettingsFile
 import dev.mexican.meetup.game.world.command.RegenerateCommand
 import dev.mexican.meetup.game.world.generation.type.map.MapGenerator
 import dev.mexican.meetup.game.world.generation.type.seed.SeedGenerator
+import dev.mexican.meetup.util.CC
 import dev.ukry.api.handler.Handler
 import me.gleeming.command.CommandHandler
 import org.bukkit.Bukkit
@@ -30,7 +31,7 @@ class GeneratorHandler : Handler() {
             "SEED" -> SeedGenerator()
             "INTEGRATED" -> MapGenerator()
             else -> {
-                Bukkit.getConsoleSender().sendMessage("Error, the generator type $type not exist!")
+                CC.log("&cError, the generator type $type not exist!")
                 exitProcess(0)
             }
         }

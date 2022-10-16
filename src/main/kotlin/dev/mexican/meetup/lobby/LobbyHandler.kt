@@ -3,6 +3,7 @@ package dev.mexican.meetup.lobby
 import dev.mexican.meetup.Burrito
 import dev.mexican.meetup.config.SettingsFile
 import dev.mexican.meetup.lobby.listener.LobbyListener
+import dev.mexican.meetup.util.CC
 import dev.ukry.api.handler.Handler
 import org.bukkit.Bukkit
 import org.bukkit.configuration.file.FileConfiguration
@@ -43,10 +44,10 @@ class LobbyHandler : Handler() {
         configYaml.set("worlds.${Burrito.getInstance().lobbyHandler.lobbyName}.generator", "Burrito")
         configYaml.save(configFile)
         mark.createNewFile()
-        Bukkit.getConsoleSender().sendMessage("-".repeat(20))
-        Bukkit.getConsoleSender().sendMessage("Bukkit properties has been configured")
-        Bukkit.getConsoleSender().sendMessage("THIS NOT IS A ERROR!")
-        Bukkit.getConsoleSender().sendMessage("-".repeat(20))
+        CC.log("&7${"-".repeat(20)}")
+        CC.log("&aBukkit properties has been configured")
+        CC.log("&7THIS &aNOT IS A ERROR!")
+        CC.log("&7${"-".repeat(20)}")
         exitProcess(0)
     }
 

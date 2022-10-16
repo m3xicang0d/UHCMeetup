@@ -5,6 +5,7 @@ import dev.mexican.meetup.config.SettingsFile
 import dev.mexican.meetup.storage.type.json.JsonStorage
 import dev.mexican.meetup.storage.type.mongo.MongoStorage
 import dev.mexican.meetup.storage.type.redis.RedisStorage
+import dev.mexican.meetup.util.CC
 import kotlin.system.exitProcess
 
 /**
@@ -23,10 +24,10 @@ class StorageHandler {
             "JSON" -> JsonStorage()
             "REDIS" -> RedisStorage()
             else -> {
-                println("Error in settings.yml, bad storage type $storageType")
+                CC.log("&cError in settings.yml, bad storage type $storageType")
                 exitProcess(0)
             }
             //---> This also is only to print before to init <----//
-        }.also { println("Storage system configured in $storageType") }.also { it.init() }
+        }.also { CC.log("&aStorage system configured in &e$storageType") }.also { it.init() }
     }
 }

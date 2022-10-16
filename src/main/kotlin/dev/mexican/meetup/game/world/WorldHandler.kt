@@ -1,7 +1,7 @@
 package dev.mexican.meetup.game.world
 
-import dev.mexican.meetup.Burrito
 import dev.mexican.meetup.game.world.generation.GeneratorHandler
+import dev.mexican.meetup.util.CC
 import dev.ukry.api.handler.Handler
 import org.bukkit.Bukkit
 import org.bukkit.World
@@ -36,7 +36,7 @@ class WorldHandler : Handler() {
         do {
             deleteDirectory(folder)
         } while (folder.exists())
-        println("Deleted after ${System.currentTimeMillis()-start}millis")
+        CC.log("&aWorld ${world.name} deleted after ${System.currentTimeMillis()-start} millis!")
     }
 
     fun removeFolder(folder : File) {
@@ -44,7 +44,7 @@ class WorldHandler : Handler() {
         do {
             deleteDirectory(folder)
         } while (folder.exists())
-        println("Deleted after ${System.currentTimeMillis()-start}millis")
+        CC.log("Folder ${folder.path} deleted after ${System.currentTimeMillis()-start}millis")
     }
 
     private fun deleteDirectory(path: File): Boolean {

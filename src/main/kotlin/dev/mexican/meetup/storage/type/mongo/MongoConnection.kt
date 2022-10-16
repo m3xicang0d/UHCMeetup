@@ -1,17 +1,14 @@
 package dev.mexican.meetup.storage.type.mongo
 
-import com.mongodb.MongoClient
-import com.mongodb.MongoClientURI
-import com.mongodb.MongoCredential
-import com.mongodb.ServerAddress
+import com.mongodb.*
 import com.mongodb.client.MongoDatabase
 import dev.mexican.meetup.config.DatabaseFile
-import dev.mexican.meetup.config.SettingsFile
+import dev.mexican.meetup.util.CC
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor.GREEN
-import org.bukkit.ChatColor.RED
 import java.io.Closeable
-import java.util.*
+import java.util.logging.Level
+import java.util.logging.Logger
 import kotlin.system.exitProcess
 
 /**
@@ -27,14 +24,16 @@ class MongoConnection : Closeable {
     lateinit var mongoDatabase : MongoDatabase
 
     fun init() {
+        val mongoLogger = Logger.getLogger("org.mongodb.driver")
+        mongoLogger.level = Level.SEVERE // e.g. or Log.WARNING, etc.
         try {
-            Bukkit.getConsoleSender().sendMessage("${GREEN}Loading MongoDB");
+            Bukkit.getConsoleSender().sendMessage("${GREEN}Loading MongoDB")
             val database = config.getString("MONGO.DATABASE")
-            Bukkit.getConsoleSender().sendMessage("${GREEN}Trying connect to database $database...")
+            CC.log("&7Trying connect to database $database...")
             if (config.getBoolean("MONGO.URI-MODE")) {
                 val uri = MongoClientURI(config.getString("MONGO.URI.CONNECTION-STR"))
                 client = MongoClient(uri)
-                Bukkit.getConsoleSender().sendMessage("${GREEN}Successfully connected to database with URI")
+                CC.log("&aSuccessfully connected to database with URI")
             } else {
                 val host = config.getString("MONGO.HOST")
                 val port = config.getInt("MONGO.PORT")
@@ -44,29 +43,28 @@ class MongoConnection : Closeable {
                     client = MongoClient(ServerAddress(host, port))
                 } else {
                     client = MongoClient(
-                        ServerAddress(host, port), Collections.singletonList(
-                            MongoCredential.createCredential(
-                                username,
-                                config.getString("MONGO.AUTH.AUTH_DATABASE"),
-                                password.toCharArray()
-                            )
-                        )
+                        ServerAddress(host, port), MongoCredential.createCredential(
+                            username,
+                            config.getString("MONGO.AUTH.AUTH_DATABASE"),
+                            password.toCharArray()
+                        ),
+                        MongoClientOptions.builder().build()
                     )
-                    Bukkit.getConsoleSender().sendMessage("${GREEN}Successfully connected to database with credentials")
+                    CC.log("&aSuccessfully connected to database with credentials")
                 }
             }
             mongoDatabase = client!!.getDatabase(database)
         } catch (e : Exception) {
             e.printStackTrace()
-            Bukkit.getConsoleSender().sendMessage("${RED}Error connecting with mongo");
+            CC.log("&cError connecting with mongo")
             exitProcess(0)
         }
     }
 
     override fun close() {
         if(this.client != null) {
-            this.client!!.close();
-            Bukkit.getConsoleSender().sendMessage("Mongo says bye :)");
+            this.client!!.close()
+            CC.log("&aMongo says bye :)")
         }
     }
 }
