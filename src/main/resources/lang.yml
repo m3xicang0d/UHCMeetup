@@ -1,3 +1,8 @@
 JOIN-MESSAGE:
-  IN-LOBBY: "Need more players"
-  IN-GAMME: "Spectator joined"
+  IN-LOBBY: "<player> joined, need <more> players to start"
+  IN-GAME: "<player> joined has spectator"
+
+GAME:
+  STARTING: "Starting in <seconds>"
+  STARTED: "Game is now started!"
+  KILL: "<killer> killed <killed>"

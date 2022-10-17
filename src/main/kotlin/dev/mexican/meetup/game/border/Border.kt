@@ -19,17 +19,23 @@ data class Border(
     val minBorder : Int,
     val time : Int,
     var world : World?,
-    var actualBorder : Int = initialBorder
+    var actualBorder : Int = initialBorder,
+    var min : Boolean = false
 ) {
 
     private val unsafeBlocks = mutableListOf(Material.LAVA, Material.STATIONARY_LAVA)
 
 
     fun resize() {
-        actualBorder -= reduction
-        generateBedrock()
-        for(player in Bukkit.getServer().onlinePlayers) {
-            player.sendMessage("Border changed to $actualBorder")
+        val toReduct = actualBorder - reduction
+        if(toReduct <= minBorder) {
+            min = true
+            Bukkit.broadcastMessage("El borde llego al minimo")
+        } else {
+            actualBorder = toReduct
+            generateBedrock()
+            Bukkit.broadcastMessage("Border changed to $actualBorder")
+
         }
     }
 

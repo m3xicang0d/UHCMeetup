@@ -27,7 +27,7 @@ class Cooldown {
         to = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(duration.toLong())
     }
 
-    fun isOnCooldown(player : Player): Boolean {
+    fun isOnCooldown(): Boolean {
         return to >= System.currentTimeMillis()
     }
 }

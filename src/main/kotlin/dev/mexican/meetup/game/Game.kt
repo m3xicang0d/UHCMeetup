@@ -83,17 +83,12 @@ class Game(
         val radius = 15
         Bukkit.getServer().onlinePlayers.forEach {p ->
             val min = -border.initialBorder
-            println("Min: $min")
             val max = border.initialBorder
-            println("Max: $max")
             val x = Random.nextInt(max - min) + min
-            println(x)
             var fX = x.toDouble()
             val z = Random.nextInt(max - min) + min
-            println(z)
             var fZ = z.toDouble()
             val pair = Pair(fX, fZ)
-//            val loc = Location(world, fX,  fZ)
             if(locs.containsValue(pair)) {
                 //z+
                 if (z > 0) {
@@ -134,8 +129,6 @@ class Game(
             } else {
                 locs[p.uniqueId] = pair
             }
-            println(fX)
-            println(fZ)
             val top = world!!.getHighestBlockAt(fX.toInt(), fZ.toInt())
             val loc = Location(world, fX, top.y.toDouble(), fZ).add(0.0, 1.0, 0.0)
             p.teleport(loc)
@@ -157,7 +150,6 @@ class Game(
             .map(Bukkit::getPlayer)
             .filter(Objects::nonNull)
             .forEach {
-                println("Generating pig to ${it.name}")
                 val pig = it.location.add(0.5, 1.0, 0.5).world.spawnEntity(it.location, EntityType.PIG) as Pig
                 pig.maxHealth = 20.0
                 pig.health = 20.0
@@ -184,7 +176,6 @@ class Game(
                 Bukkit.getScheduler().runTaskLater(Burrito.getInstance(), { (pig as CraftEntity).handle.isInvisible = true }, 2L)
 
                 pigs[it.uniqueId] = (pig as CraftEntity).entityId
-                println("Pig spawned for ${it.name} ${(pig as CraftEntity).entityId}")
             }
     }
 
@@ -207,9 +198,7 @@ class Game(
             .map(Bukkit::getPlayer)
             .filter(Objects::nonNull)
             .forEach {
-                println("Removing ${it.name}")
                 val id = pigs[it.uniqueId]
-                println(id == null)
                 it.vehicle.remove()
                 val packet = PacketPlayOutEntityDestroy(id!!)
                 (it as CraftPlayer).handle.playerConnection.sendPacket(packet)
