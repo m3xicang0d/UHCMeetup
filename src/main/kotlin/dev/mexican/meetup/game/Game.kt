@@ -16,7 +16,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Pig
 import org.bukkit.entity.Player
-import org.bukkit.metadata.FixedMetadataValue
+import org.bukkit.scheduler.BukkitRunnable
 import java.util.*
 import kotlin.random.Random
 
@@ -31,7 +31,8 @@ class Game(
     var border : Border
 ) {
 
-    var cooldown : Cooldown? = null
+    var cooldown = Cooldown()
+    var winner : Player? = null
     var state = GameState.GENERATING
         set(value) {
             field = value
@@ -41,22 +42,24 @@ class Game(
                     generateMap()
                 }
                 GameState.WAITING -> {
-                    CC.announceAndLog("Map generated successfully")
                 }
                 GameState.SCATTING -> {
                     border.generateBedrock()
-                    CC.announceAndLog("Scatting players!")
-                    scatte()
+                    object : BukkitRunnable() {
+                        override fun run() {
+                            scatte()
+                        }
+                    }.runTask(Burrito.getInstance())
                 }
                 GameState.COUNTDOWN -> {
-                    cooldown = Cooldown().also { it.setCooldown(30) }
+                    cooldown.setCooldown(30)
                     Bukkit.getScheduler().runTaskLater(Burrito.getInstance(), {sitPlayers()}, 5L)
                 }
                 GameState.PLAYING -> {
                     unSitePlayers()
                 }
                 GameState.ENDING -> {
-
+                    cooldown.setCooldown(10)
                 }
             }
         }
@@ -141,8 +144,10 @@ class Game(
 
     }
 
-    fun end() {
-
+    fun end(player : Player) {
+        state = GameState.ENDING
+        winner = player
+        Bukkit.broadcastMessage("Winner ${player.name}")
     }
 
     fun sitPlayers() {

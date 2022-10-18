@@ -1,6 +1,8 @@
 package dev.mexican.meetup.scoreboard.type
 
+import dev.mexican.meetup.config.ScoreboardFile
 import dev.mexican.meetup.scoreboard.Scoreboard
+import dev.mexican.meetup.util.CC
 import org.bukkit.entity.Player
 
 /**
@@ -11,7 +13,8 @@ import org.bukkit.entity.Player
 
 class GeneratingScoreboard : Scoreboard() {
     override fun accept(player : Player, scores : MutableList<String>) {
-        scores.add("This is possible?")
-        scores.add("Please report this")
+        ScoreboardFile.getConfig().getStringList("GENERATING").stream()
+            .map(CC::translate)
+            .forEach(scores::add)
     }
 }

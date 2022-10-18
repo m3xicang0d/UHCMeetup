@@ -46,10 +46,12 @@ class LobbyListener : Listener {
 
     @EventHandler
     fun antiVoid(event : EntityDamageEvent) {
-        if(event !is Player) return
-        if(event.cause != EntityDamageEvent.DamageCause.VOID) return
-        event.isCancelled = true
-        Burrito.getInstance().lobbyHandler.sendToLobby(event.player)
+        if(event.entity !is Player) return
+        val state = Burrito.getInstance().gameHandler.actualGame!!.state
+        if(state == GameState.WAITING) {
+            event.isCancelled = true
+            Burrito.getInstance().lobbyHandler.sendToLobby(event.entity as Player)
+        } else event.isCancelled = state == GameState.COUNTDOWN
     }
 
 

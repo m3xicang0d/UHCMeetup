@@ -1,8 +1,7 @@
 package dev.mexican.meetup.user
 
-import com.google.gson.JsonObject
+import dev.mexican.meetup.Burrito
 import dev.mexican.meetup.user.state.PlayerState
-import dev.ukry.api.json.JsonChain
 import java.util.*
 
 /**
@@ -11,17 +10,16 @@ import java.util.*
  * Project UHCMeetup
  **/
 
-class Profile(private val uuid : UUID) {
+class Profile(private val uuid: UUID) {
 
-    var state = PlayerState.LOBBY
+    var state = PlayerState.PLAYING
+        set(value) {
+            field = value
+            Burrito.getInstance().profileHandler.profiles.replace(uuid, this)
+        }
     var kills = 0
-    var deaths = 0
-
-    fun serialize() : JsonObject {
-        return JsonChain()
-            .addProperty("UUID", uuid.toString())
-            .addProperty("KILLS", kills)
-            .addProperty("DEATHS", deaths)
-            .get()
-    }
+        set(value) {
+            field = value
+            Burrito.getInstance().profileHandler.profiles.replace(uuid, this)
+        }
 }

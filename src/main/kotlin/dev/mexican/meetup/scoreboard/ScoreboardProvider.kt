@@ -16,12 +16,11 @@ import java.util.stream.Collectors
  **/
 
 class ScoreboardProvider(
-    val generatingScoreboard : Scoreboard,
-    val lobbyScoreboard : Scoreboard,
-    val scattingScoreboard : Scoreboard,
-    val countDownScoreboard : Scoreboard,
-    val playingScoreboard : Scoreboard,
-    val endingScoreboard : Scoreboard
+    private val generatingScoreboard : Scoreboard,
+    private val lobbyScoreboard : Scoreboard,
+    private val countDownScoreboard : Scoreboard,
+    private val playingScoreboard : Scoreboard,
+    private val endingScoreboard : Scoreboard
 ) : AssembleAdapter {
 
     val config = ScoreboardFile.getConfig()
@@ -73,15 +72,17 @@ class ScoreboardProvider(
         val state = Burrito.getInstance().gameHandler.actualGame!!.state
         var toReturn = mutableListOf<String>()
         when(state) {
-            GameState.WAITING -> {
+            GameState.WAITING, GameState.SCATTING -> {
                 lobbyScoreboard.accept(player, toReturn)
             }
             GameState.PLAYING -> {
                 playingScoreboard.accept(player, toReturn)
             } GameState.COUNTDOWN -> {
                 countDownScoreboard.accept(player, toReturn)
-            } else -> {
-                toReturn.add(state.toString())
+            } GameState.ENDING -> {
+                endingScoreboard.accept(player, toReturn)
+            } GameState.GENERATING -> {
+                generatingScoreboard.accept(player, toReturn)
             }
         }
 

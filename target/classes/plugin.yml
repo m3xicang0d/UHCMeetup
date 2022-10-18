@@ -1,5 +1,0 @@
-main: dev.mexican.meetup.Burrito
-name: Burrito
-version: 1.0-SNAPSHOT
-author: Kry Services
-load: STARTUP

@@ -11,6 +11,7 @@ import dev.mexican.meetup.scoreboard.ScoreboardProvider
 import dev.mexican.meetup.scoreboard.type.*
 import dev.mexican.meetup.storage.Storage
 import dev.mexican.meetup.storage.StorageHandler
+import dev.mexican.meetup.user.ProfileHandler
 import fr.mrmicky.fastinv.FastInvManager
 import io.github.thatkawaiisam.assemble.Assemble
 import me.gleeming.command.CommandHandler
@@ -35,6 +36,7 @@ class Burrito : JavaPlugin() {
 
     //Game setion
     lateinit var gameHandler : GameHandler
+    lateinit var profileHandler : ProfileHandler
 
     override fun onLoad() {
         saveDefaultConfig()
@@ -51,6 +53,8 @@ class Burrito : JavaPlugin() {
 
         gameHandler = GameHandler()
         gameHandler.preInit()
+
+        profileHandler = ProfileHandler()
     }
 
     override fun onEnable() {
@@ -66,9 +70,8 @@ class Burrito : JavaPlugin() {
         Assemble(this, ScoreboardProvider(
             GeneratingScoreboard(),
             LobbyScoreboard(),
-            ScattingScoreboard(),
             CountdownScoreboard(),
-            PlayingScoreboard(),
+            PlayingScoreboard(SpectatorScoreboard()),
             EndingScoreboard()
         ))
         FastInvManager.register(this)

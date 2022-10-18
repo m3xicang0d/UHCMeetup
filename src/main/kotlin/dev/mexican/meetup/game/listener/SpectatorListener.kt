@@ -2,6 +2,7 @@ package dev.mexican.meetup.game.listener
 
 import dev.mexican.meetup.Burrito
 import dev.mexican.meetup.game.state.GameState
+import dev.mexican.meetup.user.state.PlayerState
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -29,5 +30,6 @@ class SpectatorListener : Listener {
             .forEach {
                 it.hidePlayer(event.player)
             }
+        Burrito.getInstance().profileHandler.getOrCreateProfile(event.player).state = PlayerState.SPECTATING
     }
 }

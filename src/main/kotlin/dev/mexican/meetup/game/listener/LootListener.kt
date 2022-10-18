@@ -20,7 +20,7 @@ import org.bukkit.inventory.ItemStack
 
 class LootListener : Listener {
     @EventHandler
-    fun ChestSpawn(event: PlayerDeathEvent) {
+    fun onPlayerDeath(event: PlayerDeathEvent) {
         val player = event.entity as Player
         val loc: Location = player.location.clone()
         loc.block.type = Material.CHEST
