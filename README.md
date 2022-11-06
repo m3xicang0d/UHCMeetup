@@ -6,5 +6,5 @@
 * Assemble: https://github.com/ThatKawaiiSam/Assemble
 
 # Dependencies
-* Nothing!
+* Nothing
 
