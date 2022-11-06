@@ -1,4 +1,5 @@
 # UHCMeetup
+Burrito is a minemen style UHC-Meetup plugin
 
 # Features
 * Scoreboard (All configurable)
