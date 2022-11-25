@@ -1,8 +1,5 @@
 package dev.ukry.api.cooldown
 
-import dev.mexican.meetup.util.TimeUtils
-import org.bukkit.entity.Player
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**

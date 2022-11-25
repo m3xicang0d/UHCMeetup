@@ -1,5 +1,6 @@
 package io.github.thatkawaiisam.assemble;
 
+import dev.ukry.meetup.user.profile.listener.ProfileListener;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -54,6 +55,7 @@ public class Assemble {
 		// Register Events.
 		this.listeners = new AssembleListener(this);
 		this.plugin.getServer().getPluginManager().registerEvents(listeners, this.plugin);
+		this.plugin.getServer().getPluginManager().registerEvents(new ProfileListener(), this.plugin);
 
 		// Ensure that the thread has stopped running.
 		if (this.thread != null) {

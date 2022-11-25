@@ -1,4 +1,4 @@
-main: dev.mexican.meetup.Burrito
+main: dev.ukry.meetup.Burrito
 name: Burrito
 version: ${project.version}
 author: Kry Services

@@ -1,10 +1,8 @@
 package dev.ukry.api.json
 
+import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
-
-
-
 
 /**
  * @author UKry
@@ -13,6 +11,7 @@ import com.google.gson.JsonObject
  **/
 
 class JsonChain() {
+    private val gson = Gson()
     private var json = JsonObject()
 
     constructor(`object`: JsonObject) : this() {
@@ -36,6 +35,11 @@ class JsonChain() {
 
     fun addProperty(property: String, value: Boolean): JsonChain {
         json.addProperty(property, value)
+        return this
+    }
+
+    fun addProperty(property: String, value: Any): JsonChain {
+        json.add(property, gson.toJsonTree(value))
         return this
     }
 
