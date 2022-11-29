@@ -10,10 +10,12 @@ import dev.ukry.meetup.lobby.chunk.EmptyChunkGenerator
 import dev.ukry.meetup.scoreboard.ScoreboardProvider
 import dev.ukry.meetup.scoreboard.type.*
 import dev.ukry.meetup.storage.StorageHandler
+import dev.ukry.meetup.tablist.TabListHandler
 import dev.ukry.meetup.user.profile.ProfileHandler
 import fr.mrmicky.fastinv.FastInvManager
 import io.github.thatkawaiisam.assemble.Assemble
 import me.gleeming.command.CommandHandler
+import org.bukkit.Bukkit
 import org.bukkit.generator.ChunkGenerator
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -72,7 +74,10 @@ class Burrito : JavaPlugin() {
             PlayingScoreboard(SpectatorScoreboard()),
             EndingScoreboard()
         ))
+
         FastInvManager.register(this)
+
+        Bukkit.getPluginManager().registerEvents(TabListHandler(), this)
     }
 
     override fun onDisable() {
@@ -92,7 +97,5 @@ class Burrito : JavaPlugin() {
         fun getInstance() : Burrito {
             return getPlugin(Burrito::class.java)
         }
-
-
     }
 }

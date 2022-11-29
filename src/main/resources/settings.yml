@@ -9,6 +9,11 @@ SETTINGS:
 LOBBY:
   WORLD: "Lobby"
 
+TABLIST:
+  # Use \n for new line
+  HEADER: "&7&m--------------------\n&fWelcome to &bBurrito&f!\n&7&m--------------------"
+  FOOTER: "&7&m--------------------\n&fwww.server.com\n&7&m--------------------"
+
 GAME:
   PLAYERS:
     MIN: 3

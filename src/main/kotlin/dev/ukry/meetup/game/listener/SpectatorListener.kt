@@ -38,7 +38,7 @@ class SpectatorListener : Listener {
     fun onPlayerJoin(event : PlayerJoinEvent) {
         val game = Burrito.getInstance().gameHandler.actualGame!!
 
-        if (game.state == GameState.COUNTDOWN || game.state == GameState.ENDING || game.state == GameState.SCATTING) return
+        if (game.state == GameState.COUNTDOWN || game.state == GameState.ENDING || game.state == GameState.SCATTING || game.state == GameState.WAITING) return
 
         game.addSpectator(event.player)
         event.player.setMetadata("SPECTATOR", FixedMetadataValue(Burrito.getInstance(), true))
