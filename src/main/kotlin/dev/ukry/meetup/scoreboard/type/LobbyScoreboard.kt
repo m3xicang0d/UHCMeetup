@@ -5,6 +5,7 @@ import dev.ukry.meetup.config.ScoreboardFile
 import dev.ukry.meetup.config.SettingsFile
 import dev.ukry.meetup.game.state.GameState
 import dev.ukry.meetup.scoreboard.Scoreboard
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import java.util.concurrent.TimeUnit
 
@@ -29,6 +30,7 @@ class LobbyScoreboard : Scoreboard() {
         if(required <= game.participants.size) {
             game.state = GameState.SCATTING
         }
+
         ScoreboardFile.getConfig().getStringList("IN-LOBBY").stream()
             .map { s -> s.replace("<players-required>", (required - game.participants.size).toString()) }
             .forEach(scores::add)

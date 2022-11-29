@@ -37,6 +37,7 @@ class BorderGeneratorTask(val world : World, val size: Int) : BukkitRunnable() {
                 world.getBlockAt(loc).type = Material.BEDROCK
             }
         }
+
         for (x in -size+1 until size) {
             var loc = world.getHighestBlockAt(x, size).location.clone()
             if(world.getBlockAt(loc).type != Material.BEDROCK) {

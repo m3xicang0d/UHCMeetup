@@ -85,8 +85,6 @@ class GameListener : Listener {
     fun onBlockBreak(event: BlockBreakEvent) {
         val game = Burrito.getInstance().gameHandler.actualGame!!
 
-        Bukkit.broadcastMessage("Game state: ${game.state}")
-
         if (game.state == GameState.SCATTING || game.state == GameState.COUNTDOWN) {
             event.isCancelled = true
         }

@@ -185,7 +185,6 @@ class Game(
 
     fun addParticipant(player : Player) {
         participants.add(player.uniqueId)
-        Bukkit.broadcastMessage("Player ${player.name} joined!")
     }
 
     fun addSpectator(player : Player) {
