@@ -6,6 +6,7 @@ import dev.ukry.meetup.config.SettingsFile
 import dev.ukry.meetup.game.state.GameState
 import dev.ukry.meetup.scoreboard.Scoreboard
 import org.bukkit.entity.Player
+import java.util.concurrent.TimeUnit
 
 /**
  * @author UKry
@@ -15,6 +16,13 @@ import org.bukkit.entity.Player
 
 class LobbyScoreboard : Scoreboard() {
 
+    val config = ScoreboardFile.getConfig()
+    private var lastMillisFooter = System.currentTimeMillis()
+    private var lastMillisTitle = System.currentTimeMillis()
+    private var iFooter = 0
+    private var iTitle = 0
+
+
     override fun accept(player : Player, scores : MutableList<String>) {
         val game = Burrito.getInstance().gameHandler.actualGame!!
         val required = SettingsFile.getConfig().getInt("GAME.PLAYERS.MIN")
@@ -22,7 +30,7 @@ class LobbyScoreboard : Scoreboard() {
             game.state = GameState.SCATTING
         }
         ScoreboardFile.getConfig().getStringList("IN-LOBBY").stream()
-            .map { s -> s.replace("<players-requiered>", (required - game.participants.size).toString()) }
+            .map { s -> s.replace("<players-required>", (required - game.participants.size).toString()) }
             .forEach(scores::add)
     }
 }

@@ -29,7 +29,7 @@ GENERATING:
 IN-LOBBY:
   - "&7&m--------------------"
   - "&fWaiting for players"
-  - "&b<players-requiered> &fmore players."
+  - "&b<players-required> &fmore players."
   - ""
   - "<footer>"
   - "&7&m--------------------"

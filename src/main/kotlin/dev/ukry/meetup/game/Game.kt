@@ -140,8 +140,7 @@ class Game(
     }
 
     fun start() {
-        state = GameState.SCATTING
-
+        state = GameState.PLAYING
     }
 
     fun end(player : Player) {
@@ -195,7 +194,7 @@ class Game(
     }
 
     fun isParticipant(player : Player) : Boolean {
-        return !participants.contains(player.uniqueId)
+        return participants.contains(player.uniqueId)
     }
 
     fun unSitePlayers() {

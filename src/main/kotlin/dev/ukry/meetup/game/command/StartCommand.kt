@@ -16,7 +16,7 @@ class StartCommand {
 
     @Command(names = ["start"], permission = "command.start")
     fun execute(player : Player) {
-        Burrito.getInstance().gameHandler.actualGame!!.start()
+        Burrito.getInstance().gameHandler.actualGame!!.state = GameState.SCATTING
     }
 
     @Command(names = ["game setstate"], permission = "command.start")

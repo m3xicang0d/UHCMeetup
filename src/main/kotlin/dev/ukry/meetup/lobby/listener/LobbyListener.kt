@@ -28,6 +28,7 @@ class LobbyListener : Listener {
         world.difficulty = Difficulty.PEACEFUL
         world.pvp = false
         val block = world.getBlockAt(0, 100, 0)
+
         if(block.type == Material.AIR) {
             block.type = Material.GLASS
             world.setSpawnLocation(0, 100, 0)
@@ -39,6 +40,7 @@ class LobbyListener : Listener {
 
     @EventHandler
     fun onPlayerJoin(event : PlayerJoinEvent) {
+        event.joinMessage = null
         val game = Burrito.getInstance().gameHandler.actualGame ?: return
         if(game.state != GameState.WAITING) return
         Burrito.getInstance().lobbyHandler.sendToLobby(event.player)

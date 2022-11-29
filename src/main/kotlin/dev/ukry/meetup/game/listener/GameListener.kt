@@ -6,6 +6,7 @@ import dev.ukry.meetup.user.state.PlayerState
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
@@ -36,8 +37,11 @@ class GameListener : Listener {
         val killerProfile = Burrito.getInstance().profileHandler.getOrCreateProfile(killer)
         killerProfile.kills += killedProfile.kills
         val game = Burrito.getInstance().gameHandler.actualGame!!
+
         if(!game.isParticipant(killed)) return
+
         val participants = game.participants.size
+
         if(participants == 1) {
             game.end(killer)
         }
@@ -45,12 +49,20 @@ class GameListener : Listener {
 
     @EventHandler
     fun onPlayerDeath(event : PlayerDeathEvent) {
+
+        Bukkit.broadcastMessage("§c${event.entity.name} §7has died!")
+
         val player = event.entity
         val killer = player.killer
         val game = Burrito.getInstance().gameHandler.actualGame!!
         val participants = game.participants.size
+
         if(!game.isParticipant(player)) return
-        if(participants == 1) {
+
+        Bukkit.broadcastMessage("Removing ${player.name} from the game")
+        game.participants.remove(player.uniqueId)
+
+        if (participants == 1) {
             if(killer == null) {
                 game.end(Bukkit.getPlayer(game.participants[0]))
             } else {
@@ -69,5 +81,14 @@ class GameListener : Listener {
         }
     }
 
+    @EventHandler
+    fun onBlockBreak(event: BlockBreakEvent) {
+        val game = Burrito.getInstance().gameHandler.actualGame!!
 
+        Bukkit.broadcastMessage("Game state: ${game.state}")
+
+        if (game.state == GameState.SCATTING || game.state == GameState.COUNTDOWN) {
+            event.isCancelled = true
+        }
+    }
 }

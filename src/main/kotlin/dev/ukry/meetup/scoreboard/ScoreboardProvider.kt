@@ -5,6 +5,7 @@ import dev.ukry.meetup.config.ScoreboardFile
 import dev.ukry.meetup.game.state.GameState
 import dev.ukry.meetup.util.CC
 import io.github.thatkawaiisam.assemble.AssembleAdapter
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
 import org.bukkit.entity.Player
 import java.util.concurrent.TimeUnit
 import java.util.stream.Collectors
@@ -89,7 +90,16 @@ class ScoreboardProvider(
 
         if (config.getBoolean("FOOTER-ANIMATED.ENABLED")) {
             val footer = footer()
-            toReturn = toReturn.stream().map { s: String -> s.replace("<footer>", footer) }.collect(Collectors.toList())
+            toReturn = toReturn
+                .stream()
+                .map {
+                    CC.translate(
+                        it.replace("<footer>", footer)
+                            .replace("<ping>", (player as CraftPlayer).handle.ping.toString())
+                            .replace("<remaining>", Burrito.getInstance().gameHandler.actualGame!!.participants.size.toString())
+                    )
+                }
+                .collect(Collectors.toList())
         }
         return toReturn
     }

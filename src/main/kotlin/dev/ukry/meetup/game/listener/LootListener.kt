@@ -1,5 +1,6 @@
 package dev.ukry.meetup.game.listener
 
+import dev.ukry.meetup.Burrito
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Chest
@@ -19,6 +20,9 @@ import org.bukkit.event.entity.PlayerDeathEvent
 class LootListener : Listener {
     @EventHandler
     fun onPlayerDeath(event: PlayerDeathEvent) {
+
+        if (Burrito.getInstance().gameHandler.actualGame?.isParticipant(event.entity) == true) return
+
         val player = event.entity as Player
         val loc: Location = player.location.clone()
         loc.block.type = Material.CHEST

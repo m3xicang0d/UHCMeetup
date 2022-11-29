@@ -37,9 +37,12 @@ class SpectatorListener : Listener {
     @EventHandler
     fun onPlayerJoin(event : PlayerJoinEvent) {
         val game = Burrito.getInstance().gameHandler.actualGame!!
-        if(game.state != GameState.COUNTDOWN && game.state != GameState.PLAYING && game.state != GameState.ENDING) return
+
+        if (game.state == GameState.COUNTDOWN || game.state == GameState.ENDING || game.state == GameState.SCATTING) return
+
         game.addSpectator(event.player)
         event.player.setMetadata("SPECTATOR", FixedMetadataValue(Burrito.getInstance(), true))
+
         game.participants.stream()
             .map(Bukkit::getPlayer)
             .filter(Objects::nonNull)
@@ -54,6 +57,7 @@ class SpectatorListener : Listener {
     fun onPlayerInteract(event : PlayerInteractEvent) {
         if(event.action != Action.RIGHT_CLICK_AIR && event.action != Action.RIGHT_CLICK_BLOCK) return
         val player = event.player
+
         if(player.itemInHand.isSimilar(menu)) {
 
         }

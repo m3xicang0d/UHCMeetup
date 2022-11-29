@@ -23,3 +23,9 @@ Burrito is a minemen style UHC-Meetup plugin
 * Command API: https://github.com/GleemingKnight/spigot-command-api
 * Menu API: https://github.com/MrMicky-FR/FastInv
 * Assemble: https://github.com/ThatKawaiiSam/Assemble
+
+
+# Roadmap
+* Make it so you can't pearl outside border
+* Spectator
+* Delay after enough players have joined
