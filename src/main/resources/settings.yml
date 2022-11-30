@@ -10,11 +10,18 @@ LOBBY:
   WORLD: "Lobby"
 
 TABLIST:
+  ENABLED: True
   # Use \n for new line
   HEADER: "&7&m--------------------\n&fWelcome to &bBurrito&f!\n&7&m--------------------"
   FOOTER: "&7&m--------------------\n&fwww.server.com\n&7&m--------------------"
 
 GAME:
+  # Seconds
+  ENDERPEARL:
+    COOLDOWN: 16
+    MESSAGE: "&eYou are now on enderpearl cooldown for 16 seconds."
+    ON_COOLDOWN_MESSAGE: "&cYou are still on cooldown for &c&l<remaining> seconds&r&c."
+
   PLAYERS:
     MIN: 3
     MAX: 10

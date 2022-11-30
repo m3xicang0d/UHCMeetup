@@ -5,7 +5,6 @@ package dev.ukry.meetup.game.state
  * Created: 26/09/2022
  * Project UHCMeetup
  **/
-
 enum class GameState {
     GENERATING,
     WAITING,

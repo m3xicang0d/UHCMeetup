@@ -16,7 +16,7 @@ class ScatteCommand {
     fun execute(player : Player) {
         val game = Burrito.getInstance().gameHandler.actualGame
         if(game == null) {
-            player.sendMessage("Game not initied!")
+            player.sendMessage("Game not initiated... Try /start!")
             return
         }
         game.scatte()

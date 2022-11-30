@@ -35,7 +35,8 @@ class GameListener : Listener {
         val killedProfile = Burrito.getInstance().profileHandler.getOrCreateProfile(killed)
         killedProfile.state = PlayerState.SPECTATING
         val killerProfile = Burrito.getInstance().profileHandler.getOrCreateProfile(killer)
-        killerProfile.kills += killedProfile.kills
+        killerProfile.kills++
+        killerProfile.save()
         val game = Burrito.getInstance().gameHandler.actualGame!!
 
         if(!game.isParticipant(killed)) return

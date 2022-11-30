@@ -28,7 +28,5 @@ Burrito is a minemen style UHC-Meetup plugin
 # Roadmap
 * Spectator
 * Delay after enough players have joined
-* Options to disable tab headers / footers
 * Fix minecraft world border not generating infront of bedrock
 * Kit commands
-* 

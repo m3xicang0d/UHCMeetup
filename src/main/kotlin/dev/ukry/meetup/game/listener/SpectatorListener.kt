@@ -11,8 +11,10 @@ import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
+import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.metadata.FixedMetadataValue
 import java.util.*
 
@@ -49,8 +51,20 @@ class SpectatorListener : Listener {
             .forEach {
                 it.hidePlayer(event.player)
             }
+
         Burrito.getInstance().profileHandler.getOrCreateProfile(event.player).state = PlayerState.SPECTATING
 
+        event.player.inventory.setItem(4,menu)
+        event.player.updateInventory()
+    }
+
+    @EventHandler
+    fun onPlayerQuit(event: PlayerQuitEvent) {
+        val game = Burrito.getInstance().gameHandler.actualGame ?: return
+
+        if (game.spectators.contains(event.player.uniqueId)) {
+            game.spectators.remove(event.player.uniqueId)
+        }
     }
 
     @EventHandler
@@ -58,8 +72,17 @@ class SpectatorListener : Listener {
         if(event.action != Action.RIGHT_CLICK_AIR && event.action != Action.RIGHT_CLICK_BLOCK) return
         val player = event.player
 
-        if(player.itemInHand.isSimilar(menu)) {
+        if (player.itemInHand.isSimilar(menu)) {
+            SpectatorMenu().open(event.player)
+        }
+    }
 
+    @EventHandler
+    fun onInvClick(event: InventoryClickEvent) {
+        val game = Burrito.getInstance().gameHandler.actualGame ?: return
+
+        if (game.spectators.contains(event.whoClicked.uniqueId)) {
+            event.isCancelled = true
         }
     }
 

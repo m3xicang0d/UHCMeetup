@@ -5,6 +5,7 @@ import dev.ukry.meetup.command.admin.WorldCommand
 import dev.ukry.meetup.config.command.ReloadConfigCommand
 import dev.ukry.meetup.game.GameHandler
 import dev.ukry.meetup.game.listener.GlitchListener
+import dev.ukry.meetup.game.listener.PearlCooldown
 import dev.ukry.meetup.game.world.WorldHandler
 import dev.ukry.meetup.lobby.LobbyHandler
 import dev.ukry.meetup.lobby.chunk.EmptyChunkGenerator
@@ -78,7 +79,11 @@ class Burrito : JavaPlugin() {
 
         FastInvManager.register(this)
 
-        Bukkit.getPluginManager().registerEvents(TabListHandler(), this)
+        if (config.getBoolean("TABLIST.ENABLED")) {
+            Bukkit.getPluginManager().registerEvents(TabListHandler(), this)
+        }
+
+        Bukkit.getPluginManager().registerEvents(PearlCooldown(), this)
         Bukkit.getPluginManager().registerEvents(GlitchListener(), this)
     }
 
