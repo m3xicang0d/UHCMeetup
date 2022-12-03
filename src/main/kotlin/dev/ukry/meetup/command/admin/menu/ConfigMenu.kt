@@ -31,6 +31,7 @@ class ConfigMenu : Menu("Config Manager") {
 
         for (x in 0..36) {
             if (!buttons.containsKey(x)) {
+                //buttons[x] = AnimatedGlassButton()
                 buttons[x] = GlassButton(15)
             }
         }
