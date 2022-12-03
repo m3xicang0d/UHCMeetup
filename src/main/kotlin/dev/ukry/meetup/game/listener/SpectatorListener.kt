@@ -4,8 +4,7 @@ import dev.ukry.meetup.Burrito
 import dev.ukry.meetup.game.state.GameState
 import dev.ukry.meetup.user.state.PlayerState
 import dev.ukry.meetup.util.CC
-import fr.mrmicky.fastinv.FastInv
-import fr.mrmicky.fastinv.ItemBuilder
+import dev.ukry.menu.utils.ItemBuilder
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
@@ -28,11 +27,6 @@ class SpectatorListener : Listener {
 
     val menu = ItemBuilder(Material.ITEM_FRAME)
         .name(CC.translate("&eSpectate Menu"))
-        .lore(CC.translate(mutableListOf(
-            "&eSee a list of players",
-            "&ethat you´re able to",
-            "&eteleport to and spectate"
-        )))
         .build()
 
 
@@ -73,7 +67,7 @@ class SpectatorListener : Listener {
         val player = event.player
 
         if (player.itemInHand.isSimilar(menu)) {
-            SpectatorMenu().open(event.player)
+            //SpectatorMenu().open(event.player)
         }
     }
 
@@ -86,9 +80,12 @@ class SpectatorListener : Listener {
         }
     }
 
+    /*
     class SpectatorMenu : FastInv(27, "Spectate") {
         init {
 //            addItem()
         }
     }
+
+     */
 }

@@ -3,3 +3,6 @@ name: Burrito
 version: ${project.version}
 author: Kry Services
 load: STARTUP
+
+depend:
+  - ProtocolLib

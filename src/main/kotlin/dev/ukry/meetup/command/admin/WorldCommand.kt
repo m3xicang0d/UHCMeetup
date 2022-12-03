@@ -1,7 +1,5 @@
 package dev.ukry.meetup.command.admin
 
-import fr.mrmicky.fastinv.FastInv
-import fr.mrmicky.fastinv.ItemBuilder
 import me.gleeming.command.Command
 import me.gleeming.command.paramter.Param
 import org.bukkit.*
@@ -22,9 +20,10 @@ class WorldCommand {
 
     @Command(names = ["world"], permission = "command.world")
     fun execute(player : Player) {
-        WorldsMenu().open(player)
+        //WorldsMenu().open(player)
     }
 
+    /*
     class WorldsMenu : FastInv(27, "${ChatColor.GREEN}Worlds") {
 
         init {
@@ -42,5 +41,8 @@ class WorldCommand {
                 }
             }
         }
+
+
     }
+    */
 }
