@@ -30,3 +30,8 @@ Burrito is a minemen style UHC-Meetup plugin
 * Delay after enough players have joined
 * Fix minecraft world border not generating infront of bedrock
 * Kit commands
+
+# Creditos
+* JesusMX / m3xicang0d
+* Ukry / FXMXGRAGF
+* Nopox / He really did not do much because he was also lazy, but we put it because he is a friend
