@@ -1,4 +1,4 @@
-# UHCMeetup
+# UHCMeetup / Burrito
 Burrito is a minemen style UHC-Meetup plugin
 
 # Features
